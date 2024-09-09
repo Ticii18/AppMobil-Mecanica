@@ -1,0 +1,208 @@
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ImageBackground,
+  TouchableOpacity
+} from "react-native";
+
+import firestore from '@react-native-firebase/firestore'
+import { Query } from "mysql2/typings/mysql/lib/protocol/sequences/Query";
+
+
+const CallsScreen = () => {
+  const [data, setData] = useState()
+  const [rtData, setRTData] = useState([])
+
+    // async function loadData(){
+    //   try{
+  
+    //     const Personas= await firestore().collection('Turnos').get();
+    //     setData(Personas.docs);
+    //   } catch(e){
+    //     console.log(e);
+    //   }
+    // }
+    async function loadRTData(){
+      const suscriber = firestore().collection('Turnos').onSnapshot(QuerySnapshot =>{
+          const turnos =[]
+
+          QuerySnapshot.forEach(documentSnapshot =>{
+            turnos.push({
+              ...documentSnapshot.data(),
+              key: documentSnapshot.id
+            })
+          })
+
+          setRTData(turnos)
+      });
+      return () => suscriber()
+    }
+  
+    useEffect(() => {
+      // loadData();
+      loadRTData();
+    },[]);
+      
+    // function renderItem({item }){
+    //   return(
+    //     <View style={styles.container}>
+    //       <View style={styles.callItem}>
+    //       <Text>Nombre: {item.data().Nombre}</Text>
+    //       <Text>Apellido: {item.data().Apellido}</Text>
+    //       <Text>DNI: {item.data().DNI}</Text>
+    //       <Text>Direccion: {item.data().Direccion}</Text>
+    //       <Text>Problema: {item.data().Problema}</Text>
+    //       <Text>Telefono: {item.data().Telefono}</Text>
+    //       </View>
+    //     </View>
+    //   )
+    // }
+    function renderRTItem({item }){
+      return(
+        <View style={styles.container}>
+          <View style={styles.callItem}>
+          <Text>Nombre: {item.Nombre}</Text>
+          <Text>Apellido: {item.Apellido}</Text>
+          <Text>DNI: {item.DNI}</Text>
+          <Text>Direccion: {item.Direccion}</Text>
+          <Text>Problema: {item.Problema}</Text>
+          <Text>Telefono: {item.Telefono}</Text>
+          </View>
+        </View>
+      )
+    }
+  
+  
+
+
+  return (
+      <View >
+      <Text style={styles.title}>Turnos en tiempo real</Text>
+        <FlatList
+          data={ rtData}
+          renderItem={renderRTItem}
+          keyExtractor={ item=> item.key}
+        />
+      </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover"
+  },
+  container: {
+    flex: 1,
+    padding: 16
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 16,
+    backgroundColor: "rgba(240, 240, 240, 0.9)"
+  },
+  callItem: {
+    backgroundColor: "#00FF36",
+    padding: 16,
+    marginBottom: 12,
+    borderRadius: 8
+  },
+  clientName: {
+    fontSize: 18,
+    fontWeight: "bold"
+  },
+  phoneNumber: {
+    fontSize: 16,
+    color: "#333"
+  },
+  buttonContainer: {
+    flexDirection: "column"
+  },
+  buttonText1: {
+    padding: 8,
+    marginBottom: 16,
+    borderRadius: 8,
+    fontWeight: "bold",
+    fontSize: 20,
+    backgroundColor: "rgba(240, 240, 240, 0.9)",
+    color: "black", // Cambia el color de texto
+    textAlign: "center"
+  },
+  buttonText2: {
+    padding: 8,
+    marginBottom: 16,
+    borderRadius: 8,
+    fontWeight: "bold",
+    fontSize: 20,
+    backgroundColor: "rgba(240, 240, 240, 0.9)",
+    color: "black", // Cambia el color de texto
+    textAlign: "center"
+  }
+});
+
+export default CallsScreen;
+
+
+
+
+
+
+
+
+// import react, { useEffect, useState } from 'react';
+// import { View, Text, FlatList} from 'react-native'
+
+// import firestore from '@react-native-firebase/firestore'
+
+
+
+// const CallScreen = () => {
+  
+//   const [data, setData] = useState()
+
+//   async function loadData(){
+//     try{
+
+//       const Personas= await firestore().collection('Turnos').get();
+//       console.log(Personas.docs[0].data());
+//       setData(Personas.docs);
+//     } catch(e){
+//       console.log(e);
+//     }
+//   }
+
+//   useEffect(() => {
+//     loadData();
+//   },[]);
+    
+//   function renderItem({item }){
+//     return(
+//       <View style={{padding:10}}>
+//         <Text>Nombre: {item.data().Nombre}</Text>
+//         <Text>Apellido: {item.data().Apellido}</Text>
+//         <Text>DNI: {item.data().DNI}</Text>
+//         <Text>Direccion: {item.data().Direccion}</Text>
+//         <Text>Problema: {item.data().Problema}</Text>
+//         <Text>Telefono: {item.data().Telefono}</Text>
+//       </View>
+//     )
+//   }
+
+//   return (
+//     <View style= {{ padding:10}}>
+//       <Text>Los turnos</Text>
+//       <FlatList 
+//         data={data}
+//         renderItem={renderItem}
+//         keyExtractor={ item=> item.id}
+//       />
+//     </View>
+//   );
+// } 
+
+// export default CallScreen;

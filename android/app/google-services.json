@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1032830373241",
+    "firebase_url": "https://appmecanica-b51e5-default-rtdb.firebaseio.com",
+    "project_id": "appmecanica-b51e5",
+    "storage_bucket": "appmecanica-b51e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032830373241:android:75960776bcf7e2f652f3a8",
+        "android_client_info": {
+          "package_name": "com.appmecanica"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEbg9X0fTL0-hz4UiObFs0PibiY0w6mB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

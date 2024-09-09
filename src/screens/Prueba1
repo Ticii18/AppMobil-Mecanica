@@ -1,0 +1,150 @@
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ImageBackground,
+  TouchableOpacity
+} from "react-native";
+
+import firestore from '@react-native-firebase/firestore';
+
+
+const CallsScreen = () => {
+  const [calls, setCalls] = useState([
+    { id: "1", clientName: "Ramiro", Problema: "No gira" },
+    { id: "2", clientName: "Tici", Problema: "El volante se salio" },
+    { id: "5", clientName: "Leo", Problema: "Olor a muerto" },
+    { id: "6", clientName: "Luciano", Problema: "Cambio de aceite" }
+  ]);
+
+
+  return (
+    
+      <View style={styles.container}>
+        <Text style={styles.title}>Turnos</Text>
+        <FlatList
+          data={calls}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.callItem}>
+              <Text style={styles.clientName}>{item.clientName}</Text>
+              <Text style={styles.Problema}>{item.Problema}</Text>
+            </View>
+          )}
+        />
+      </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover"
+  },
+  container: {
+    flex: 1,
+    padding: 16
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 16,
+    backgroundColor: "rgba(240, 240, 240, 0.9)"
+  },
+  callItem: {
+    backgroundColor: "rgba(240, 240, 240, 0.9)",
+    padding: 16,
+    marginBottom: 12,
+    borderRadius: 8
+  },
+  clientName: {
+    fontSize: 18,
+    fontWeight: "bold"
+  },
+  phoneNumber: {
+    fontSize: 16,
+    color: "#333"
+  },
+  buttonContainer: {
+    flexDirection: "column"
+  },
+  buttonText1: {
+    padding: 8,
+    marginBottom: 16,
+    borderRadius: 8,
+    fontWeight: "bold",
+    fontSize: 20,
+    backgroundColor: "rgba(240, 240, 240, 0.9)",
+    color: "black", // Cambia el color de texto
+    textAlign: "center"
+  },
+  buttonText2: {
+    padding: 8,
+    marginBottom: 16,
+    borderRadius: 8,
+    fontWeight: "bold",
+    fontSize: 20,
+    backgroundColor: "rgba(240, 240, 240, 0.9)",
+    color: "black", // Cambia el color de texto
+    textAlign: "center"
+  }
+});
+
+export default CallsScreen;
+
+
+// import react, { useEffect, useState } from 'react';
+// import { View, Text, FlatList} from 'react-native'
+
+// import firestore from '@react-native-firebase/firestore'
+
+
+
+// const CallScreen = () => {
+  
+//   const [data, setData] = useState()
+
+//   async function loadData(){
+//     try{
+
+//       const Personas= await firestore().collection('Turnos').get();
+//       console.log(Personas.docs[0].data());
+//       setData(Personas.docs);
+//     } catch(e){
+//       console.log(e);
+//     }
+//   }
+
+//   useEffect(() => {
+//     loadData();
+//   },[]);
+    
+//   function renderItem({item }){
+//     return(
+//       <View style={{padding:10}}>
+//         <Text>Nombre: {item.data().Nombre}</Text>
+//         <Text>Apellido: {item.data().Apellido}</Text>
+//         <Text>DNI: {item.data().DNI}</Text>
+//         <Text>Direccion: {item.data().Direccion}</Text>
+//         <Text>Problema: {item.data().Problema}</Text>
+//         <Text>Telefono: {item.data().Telefono}</Text>
+//       </View>
+//     )
+//   }
+
+//   return (
+//     <View style= {{ padding:10}}>
+//       <Text>Los turnos</Text>
+//       <FlatList 
+//         data={data}
+//         renderItem={renderItem}
+//         keyExtractor={ item=> item.id}
+//       />
+//     </View>
+//   );
+// } 
+
+// export default CallScreen;
